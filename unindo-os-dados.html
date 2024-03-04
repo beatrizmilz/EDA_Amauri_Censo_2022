@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>População por municípios</title>
+<title>Unindo as tabelas</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -57,16 +57,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="EDA-populacao_files/libs/clipboard/clipboard.min.js"></script>
-<script src="EDA-populacao_files/libs/quarto-html/quarto.js"></script>
-<script src="EDA-populacao_files/libs/quarto-html/popper.min.js"></script>
-<script src="EDA-populacao_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="EDA-populacao_files/libs/quarto-html/anchor.min.js"></script>
-<link href="EDA-populacao_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="EDA-populacao_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="EDA-populacao_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="EDA-populacao_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="EDA-populacao_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="unindo-os-dados_files/libs/clipboard/clipboard.min.js"></script>
+<script src="unindo-os-dados_files/libs/quarto-html/quarto.js"></script>
+<script src="unindo-os-dados_files/libs/quarto-html/popper.min.js"></script>
+<script src="unindo-os-dados_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="unindo-os-dados_files/libs/quarto-html/anchor.min.js"></script>
+<link href="unindo-os-dados_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="unindo-os-dados_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="unindo-os-dados_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="unindo-os-dados_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="unindo-os-dados_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -79,8 +79,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">População por municípios</h1>
-<p class="subtitle lead">Prévia da População dos Municípios com base nos dados do Censo Demográfico 2022 coletados até 25/12/2022</p>
+<h1 class="title">Unindo as tabelas</h1>
 </div>
 
 
@@ -97,41 +96,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Download dos dados em: <a href="https://www.ibge.gov.br/estatisticas/sociais/populacao/22827-censo-demografico-2022.html?edicao=35938" class="uri">https://www.ibge.gov.br/estatisticas/sociais/populacao/22827-censo-demografico-2022.html?edicao=35938</a></p>
-<section id="dependências" class="level2">
-<h2 class="anchored" data-anchor-id="dependências">Dependências</h2>
-<p>Carregando pacotes necessários:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tab_pop_comparacao <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"tabela_amauri_pop_comparacao.xlsx"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>tab_abastecimento <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"tabela_amauri_6803.xlsx"</span>) </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>tab_esgoto <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"tabela_amauri_6805.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Carregando os municípios de interesse:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="st">"municipios_interesse.R"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tabela_amauri_final <span class="ot">&lt;-</span> tab_pop_comparacao <span class="sc">|&gt;</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(tab_abastecimento, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"name_muni"</span> <span class="ot">=</span> <span class="st">"nome_muni"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(tab_esgoto, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"name_muni"</span> <span class="ot">=</span> <span class="st">"nome_muni"</span>, <span class="st">"uf"</span>,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                                      <span class="st">"categoria_tabela"</span>, <span class="st">"total"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">total_domicilios =</span> total,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                  <span class="at">pop_porc_crescimento =</span> porc_crescimento) <span class="sc">|&gt;</span> </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">estimativa_pessoas_por_domicilio =</span> populacao_estimada_2022<span class="sc">/</span> total_domicilios ,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">.after =</span> total_domicilios</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span> </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>uf) <span class="sc">|&gt;</span> </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">relocate</span>(categoria_tabela, <span class="at">.after =</span> name_muni)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(tabela_amauri_final, <span class="st">"tabela_amauri_joined.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="leitura-e-limpeza-dos-dados" class="level2">
-<h2 class="anchored" data-anchor-id="leitura-e-limpeza-dos-dados">Leitura e limpeza dos dados</h2>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dados <span class="ot">&lt;-</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_xls</span>(<span class="st">"dados/POP2022_Municipios_20230622.xls"</span>, <span class="at">skip =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(UF <span class="sc">==</span> <span class="st">"SP"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    nome_do_municipio <span class="sc">%in%</span> <span class="fu">c</span>(</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>      muni_prioritarios_para_tarcisio,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>      muni_intermediarios,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>      muni_sedes_regionais_sabesp</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="at">name_muni =</span> nome_do_municipio, <span class="at">populacao_estimada_2022 =</span> populacao) <span class="sc">|&gt;</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">populacao_estimada_2022 =</span> readr<span class="sc">::</span><span class="fu">parse_number</span>(populacao_estimada_2022)) </span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>dados <span class="sc">|&gt;</span> </span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a> writexl<span class="sc">::</span><span class="fu">write_xlsx</span>(<span class="st">"tabela_amauri_pop_2022.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
 
 </main>
 <!-- /main column -->

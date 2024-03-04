@@ -26,8 +26,6 @@ Carregando os municípios de interesse:
 source("municipios_interesse.R")
 ```
 
-
-
 ## Leitura e limpeza dos dados
 
 ```{r}
@@ -53,8 +51,6 @@ tab_6803 <- read_xlsx("dados/tabela6803_MUN_SP.xlsx",
 head(tab_6803) |> 
   knitr::kable()
 ```
-
-
 
 ```{r}
 tab_6803_longa <- tab_6803 |> 

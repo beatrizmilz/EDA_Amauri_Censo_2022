@@ -13,7 +13,6 @@ tab_abastecimento <- readxl::read_xlsx("tabela_amauri_6803.xlsx")
 tab_esgoto <- readxl::read_xlsx("tabela_amauri_6805.xlsx")
 ```
 
-
 ```{r}
 tabela_amauri_final <- tab_pop_comparacao |> 
   dplyr::left_join(tab_abastecimento, by = c("name_muni" = "nome_muni")) |>
@@ -30,4 +29,3 @@ tabela_amauri_final <- tab_pop_comparacao |>
 
 writexl::write_xlsx(tabela_amauri_final, "tabela_amauri_joined.xlsx")
 ```
-

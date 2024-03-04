@@ -3,7 +3,7 @@ title: "Abastecimento público e esgotamento sanitário no estado de São Paulo 
 author:
   - "Amauri Polacchi"
   - "Beatriz Milz"
-format: html
+format: docx
 editor: visual
 ---
 
@@ -25,14 +25,12 @@ Conforme o Censo 2022, identificar para um conjunto de municípios:
 
 ## Dados
 
-Download dos dados feito em 04/03/2024, no [site do IBGE: Estatísticas \> Sociais \> População \> Censo Demográfico](https://www.ibge.gov.br/estatisticas/sociais/populacao/22827-censo-demografico-2022.html?edicao=39224&t=resultados).
-
-Fonte: IBGE (2024).
-
 -   Tabelas:
 
-    -   `tabela6803_MUN_SP.xlsx` - Domicílios particulares permanentes ocupados, por existência de ligação à rede geral de distribuição de água e principal forma de abastecimento de água
+    -   `tabela6803_MUN_SP.xlsx` - Domicílios particulares permanentes ocupados, por existência de ligação à rede geral de distribuição de água e principal forma de abastecimento de água. Download dos dados feito em 04/03/2024, no [site do IBGE: Estatísticas \> Sociais \> População \> Censo Demográfico](https://www.ibge.gov.br/estatisticas/sociais/populacao/22827-censo-demografico-2022.html?edicao=39224&t=resultados).
 
-    -   `tabela6805_MUN_SP.xlsx` - Domicílios particulares permanentes ocupados, por tipo de esgotamento sanitário
+    -   `tabela6805_MUN_SP.xlsx` - Domicílios particulares permanentes ocupados, por tipo de esgotamento sanitário. Download dos dados feito em 04/03/2024, no [site do IBGE: Estatísticas \> Sociais \> População \> Censo Demográfico](https://www.ibge.gov.br/estatisticas/sociais/populacao/22827-censo-demografico-2022.html?edicao=39224&t=resultados).
 
-    -   `POP2022_Municipios_20230622.xls` Prévia da População dos Municípios com base nos dados do Censo Demográfico 2022 coletados até 25/12/2022. [Acesso aqui](https://www.ibge.gov.br/estatisticas/sociais/populacao/22827-censo-demografico-2022.html?edicao=35938).
+    -   `POP2022_Municipios_20230622.xls` Prévia da População dos Municípios com base nos dados do Censo Demográfico 2022 coletados até 25/12/2022. Download dos dados feito em 04/03/2024, no [site do IBGE.](https://www.ibge.gov.br/estatisticas/sociais/populacao/22827-censo-demografico-2022.html?edicao=35938)
+
+    - `Tabela 4.20.1.1.xls` - Tabelas - Características da População e dos Domicílios -  Mesorregiões, microrregiões, municípios,distritos, subdistritos e bairros.   Download dos dados feito em 04/03/2024, no [site do IBGE.](https://www.ibge.gov.br/estatisticas/sociais/populacao/9662-censo-demografico-2010.html?edicao=10503&t=resultados)
