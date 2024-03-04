@@ -1,0 +1,109 @@
+---
+title: "Explorando a tabela 6803"
+subtitle: "Domicílios particulares permanentes ocupados, por existência de ligação à rede geral de distribuição de água e principal forma de abastecimento de água"
+format: html
+editor: visual
+knitr:
+  opts_chunk:
+    echo: true
+---
+
+## Dependências
+
+Carregando pacotes necessários:
+
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+library(readxl)
+library(janitor)
+```
+
+Carregando os municípios de interesse:
+
+```{r}
+source("municipios_interesse.R")
+```
+
+
+
+## Leitura e limpeza dos dados
+
+```{r}
+tab_6803 <- read_xlsx("dados/tabela6803_MUN_SP.xlsx",
+                      skip = 4) |>
+  janitor::clean_names() |>
+  rename(nome_muni = x1) |>
+    filter(nome_muni != "Fonte: IBGE - Censo Demográfico",
+         nome_muni != "São Paulo") |> 
+  separate(nome_muni, c("nome_muni", "uf"), sep = "\\(") |> 
+  mutate(uf = str_remove(uf, "\\)"),
+         nome_muni = stringr::str_trim(nome_muni)) |>
+  mutate(across(
+    -c(
+      nome_muni, uf,
+      total,
+      possui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal
+    ),
+    readr::parse_number
+  )) 
+
+
+head(tab_6803) |> 
+  knitr::kable()
+```
+
+
+
+```{r}
+tab_6803_longa <- tab_6803 |> 
+  pivot_longer(cols = -c(nome_muni, total, uf),
+               names_to = "variavel",
+               values_to = "valor") 
+
+head(tab_6803_longa) |> 
+  knitr::kable()
+```
+
+Explorando os dados. As categorias são mutuamente exclusivas? Não! Ter cuidado. Precisamos tirar as categorias "nao_possui_ligacao_com_a_rede_geral" e "possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma" para não contar 2x.
+
+```{r}
+tab_6803_longa |> 
+  filter(!variavel %in% c("nao_possui_ligacao_com_a_rede_geral",
+  "possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma")) |> 
+  group_by(nome_muni, total) |>
+  summarise(soma = sum(valor, na.rm = TRUE)) |> 
+  mutate(verificacao = total == soma)
+```
+
+## Respondendo a pergunta
+
+```{r}
+tab_amauri_6803 <- 
+  tab_6803_longa |>
+  # Filtrando os municípios que são foco da análise:
+    mutate(
+    categoria_tabela = case_when(
+      nome_muni %in% muni_prioritarios_para_tarcisio ~ "Prioritários para Tarcísio",
+      nome_muni %in% muni_intermediarios ~ "Intermediários",
+      nome_muni %in% muni_sedes_regionais_sabesp ~ "Sedes regionais da Sabesp"
+    ), .after = nome_muni
+  ) |> 
+  drop_na(categoria_tabela) |> 
+  filter(
+    variavel %in% c(
+      "possui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal",
+      "possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma",
+      "nao_possui_ligacao_com_a_rede_geral"
+    )) |> 
+  mutate(porc = round((valor / total)*100,2)) |> 
+  pivot_wider(names_from = variavel, values_from = c(valor, porc)) 
+
+
+head(tab_amauri_6803) |> 
+  knitr::kable()
+
+tab_amauri_6803 |> 
+  writexl::write_xlsx("tabela_amauri_6803.xlsx")
+```

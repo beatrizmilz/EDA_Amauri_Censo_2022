@@ -1,0 +1,137 @@
+---
+title: "Explorando a tabela 6805"
+subtitle: "Domicílios particulares permanentes ocupados, por tipo de esgotamento sanitário"
+format: html
+editor: visual
+---
+
+
+## Dependências
+
+Carregando pacotes necessários:
+
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+library(readxl)
+library(janitor)
+```
+
+
+Carregando os municípios de interesse:
+
+```{r}
+source("municipios_interesse.R")
+```
+
+
+## Leitura e limpeza dos dados
+
+
+```{r}
+tab_6805 <-
+  readxl::read_xlsx("dados/tabela6805_MUN_SP.xlsx", skip = 4) |>
+  janitor::clean_names() |>
+  rename(nome_muni = x1) |>
+  filter(nome_muni != "Fonte: IBGE - Censo Demográfico",
+         nome_muni != "São Paulo") |>
+  mutate(across(
+    -c(
+      nome_muni,
+      total,
+      rede_geral_rede_pluvial_ou_fossa_ligada_a_rede,
+      rede_geral_ou_pluvial
+    ),
+    readr::parse_number
+  )) |>
+  separate(nome_muni, c("nome_muni", "uf"), sep = "\\(") |>
+  mutate(uf = str_remove(uf, "\\)"),
+         nome_muni = stringr::str_trim(nome_muni))
+
+
+head(tab_6805) |> 
+  knitr::kable()
+```
+
+-   Verificando os totais:
+
+```{r}
+tab_6805 |> 
+  pivot_longer(-c(nome_muni, uf, total)) |>  
+  dplyr::filter(name != "rede_geral_rede_pluvial_ou_fossa_ligada_a_rede") |> 
+  group_by(nome_muni, total) |> 
+  summarise(soma = sum(value, na.rm = TRUE))
+
+```
+
+## Recategorizando
+
+Verificando as categorias possíveis:
+
+```{r}
+tab_6805 |> 
+  pivot_longer(-c(nome_muni, uf, total)) |> 
+  distinct(name) |> 
+  pull()
+```
+
+
+```{r}
+# filtrando os municipios que são focos da analise
+
+tab_6805_categorizacao <- tab_6805 |>
+  pivot_longer(-c(nome_muni, uf, total)) |>
+  # Filtrando os municípios que são foco da análise:
+  mutate(
+    categoria_tabela = case_when(
+      nome_muni %in% muni_prioritarios_para_tarcisio ~ "Prioritários para Tarcísio",
+      nome_muni %in% muni_intermediarios ~ "Intermediários",
+      nome_muni %in% muni_sedes_regionais_sabesp ~ "Sedes regionais da Sabesp"
+    ),
+    .after = nome_muni
+  ) |>
+  drop_na(categoria_tabela) |>
+  filter(name != "rede_geral_rede_pluvial_ou_fossa_ligada_a_rede") |>
+  # group_by(nome_muni) |>
+  # mutate(soma = sum(value, na.rm = TRUE),
+  #        prova_real = soma == total) |>
+  mutate(
+    categoria_esgoto = case_when(
+      name == "rede_geral_ou_pluvial" ~
+        "cat_01_rede_geral_ou_pluvial",
+      name %in% c("fossa_septica_ou_fossa_filtro_ligada_a_rede") ~ "cat_02_fossa_septica_ou_fossa_filtro_ligada_a_rede",
+      name %in% c("fossa_septica_ou_fossa_filtro_nao_ligada_a_rede") ~ "cat_03_fossa_septica_ou_fossa_filtro_nao_ligada_a_rede",
+      name %in% c(
+        "fossa_rudimentar_ou_buraco",
+        "vala",
+        "rio_lago_corrego_ou_mar",
+        "outra_forma"  ,
+        "nao_tinham_banheiro_nem_sanitario"
+      ) ~ "cat_04_outros"
+    )
+  )
+
+head(tab_6805_categorizacao) |> 
+  knitr::kable()
+
+```
+
+## Respondendo a pergunta
+
+```{r}
+tab_6805_amauri <- tab_6805_categorizacao |>
+  group_by(nome_muni, categoria_tabela, uf, total, categoria_esgoto) |>
+  summarise(soma = sum(value, na.rm = TRUE),
+            porc = round((soma / total) * 100, 2)) |>
+  dplyr::distinct() |>
+  pivot_wider(names_from = categoria_esgoto,
+              values_from = c(soma, porc))
+
+head(tab_6805_amauri) |> 
+  knitr::kable()
+
+tab_6805_amauri |>
+  writexl::write_xlsx("tabela_amauri_6805.xlsx")
+
+```

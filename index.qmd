@@ -1,0 +1,38 @@
+---
+title: "Abastecimento público e esgotamento sanitário no estado de São Paulo - Censo 2022"
+author:
+  - "Amauri Polacchi"
+  - "Beatriz Milz"
+format: html
+editor: visual
+---
+
+## Objetivo
+
+Conforme o Censo 2022, identificar para um conjunto de municípios:
+
+-   
+
+    1)  Quantos habitantes não têm abastecimento de água adequado
+
+-   
+
+    2)  Quantos não têm esgotamento sanitário adequado
+
+## Municípios de interesse:
+
+![](images/clipboard-3700841941.png){fig-align="center"}
+
+## Dados
+
+Download dos dados feito em 04/03/2024, no [site do IBGE: Estatísticas \> Sociais \> População \> Censo Demográfico](https://www.ibge.gov.br/estatisticas/sociais/populacao/22827-censo-demografico-2022.html?edicao=39224&t=resultados).
+
+Fonte: IBGE (2024).
+
+-   Tabelas:
+
+    -   `tabela6803_MUN_SP.xlsx` - Domicílios particulares permanentes ocupados, por existência de ligação à rede geral de distribuição de água e principal forma de abastecimento de água
+
+    -   `tabela6805_MUN_SP.xlsx` - Domicílios particulares permanentes ocupados, por tipo de esgotamento sanitário
+
+    -   `POP2022_Municipios_20230622.xls` Prévia da População dos Municípios com base nos dados do Censo Demográfico 2022 coletados até 25/12/2022. [Acesso aqui](https://www.ibge.gov.br/estatisticas/sociais/populacao/22827-censo-demografico-2022.html?edicao=35938).
