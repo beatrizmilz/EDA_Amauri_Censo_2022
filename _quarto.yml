@@ -1,0 +1,35 @@
+project:
+  type: website
+  output-dir: docs/
+  
+lang: pt
+author:
+  - "Amauri Polacchi"
+  - "Beatriz Milz"
+
+website:
+  title: "."
+  navbar:
+    left:
+      - href: index.qmd
+        text: Início
+      - href: EDA-6803.qmd
+        text: EDA-6803
+      - href: EDA-6805.qmd
+        text: EDA-6805
+      - href: EDA-populacao.qmd
+        text: EDA População
+      - href: unindo-os-dados.qmd
+        text: Unindo os Dados
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+
+knitr:
+  opts_chunk:
+    message: false
+    warning: false

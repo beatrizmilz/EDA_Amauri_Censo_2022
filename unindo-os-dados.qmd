@@ -6,26 +6,32 @@ editor: visual
 
 ```{r}
 
-tab_pop_comparacao <- readxl::read_xlsx("tabela_amauri_pop_comparacao.xlsx")
+tab_pop_comparacao <-
+  readxl::read_xlsx("output/tabela_amauri_pop_comparacao.xlsx")
 
-tab_abastecimento <- readxl::read_xlsx("tabela_amauri_6803.xlsx") 
+tab_abastecimento <-
+  readxl::read_xlsx("output/tabela_amauri_6803.xlsx")
 
-tab_esgoto <- readxl::read_xlsx("tabela_amauri_6805.xlsx")
+tab_esgoto <- readxl::read_xlsx("output/tabela_amauri_6805.xlsx")
 ```
 
 ```{r}
-tabela_amauri_final <- tab_pop_comparacao |> 
+tabela_amauri_final <- tab_pop_comparacao |>
   dplyr::left_join(tab_abastecimento, by = c("name_muni" = "nome_muni")) |>
-  dplyr::left_join(tab_esgoto, by = c("name_muni" = "nome_muni", "uf",
-                                      "categoria_tabela", "total")) |> 
-    dplyr::rename(total_domicilios = total,
-                  pop_porc_crescimento = porc_crescimento) |> 
-  dplyr::mutate(
-    estimativa_pessoas_por_domicilio = populacao_estimada_2022/ total_domicilios ,
-    .after = total_domicilios
-  ) |> 
-  dplyr::select(-uf) |> 
+  dplyr::left_join(tab_esgoto,
+                   by = c("name_muni" = "nome_muni", "uf",
+                          "categoria_tabela", "total")) |>
+  dplyr::rename(total_domicilios = total,
+                pop_porc_crescimento = porc_crescimento) |>
+  dplyr::mutate(estimativa_pessoas_por_domicilio = populacao_estimada_2022 / total_domicilios ,
+                .after = total_domicilios) |>
+  dplyr::select(-uf) |>
   dplyr::relocate(categoria_tabela, .after = name_muni)
 
-writexl::write_xlsx(tabela_amauri_final, "tabela_amauri_joined.xlsx")
+
+head(tabela_amauri_final) |> 
+  knitr::kable()
+
+
+writexl::write_xlsx(tabela_amauri_final, "output/tabela_amauri_joined.xlsx")
 ```

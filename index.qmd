@@ -3,7 +3,7 @@ title: "Abastecimento público e esgotamento sanitário no estado de São Paulo 
 author:
   - "Amauri Polacchi"
   - "Beatriz Milz"
-format: docx
+format: html
 editor: visual
 ---
 
@@ -11,13 +11,9 @@ editor: visual
 
 Conforme o Censo 2022, identificar para um conjunto de municípios:
 
--   
+1)  Quantos habitantes não têm abastecimento de água adequado
 
-    1)  Quantos habitantes não têm abastecimento de água adequado
-
--   
-
-    2)  Quantos não têm esgotamento sanitário adequado
+2)  Quantos não têm esgotamento sanitário adequado
 
 ## Municípios de interesse:
 
@@ -33,4 +29,15 @@ Conforme o Censo 2022, identificar para um conjunto de municípios:
 
     -   `POP2022_Municipios_20230622.xls` Prévia da População dos Municípios com base nos dados do Censo Demográfico 2022 coletados até 25/12/2022. Download dos dados feito em 04/03/2024, no [site do IBGE.](https://www.ibge.gov.br/estatisticas/sociais/populacao/22827-censo-demografico-2022.html?edicao=35938)
 
-    - `Tabela 4.20.1.1.xls` - Tabelas - Características da População e dos Domicílios -  Mesorregiões, microrregiões, municípios,distritos, subdistritos e bairros.   Download dos dados feito em 04/03/2024, no [site do IBGE.](https://www.ibge.gov.br/estatisticas/sociais/populacao/9662-censo-demografico-2010.html?edicao=10503&t=resultados)
+    -   `Tabela 4.20.1.1.xls` - Tabelas - Características da População e dos Domicílios - Mesorregiões, microrregiões, municípios,distritos, subdistritos e bairros. Download dos dados feito em 04/03/2024, no [site do IBGE.](https://www.ibge.gov.br/estatisticas/sociais/populacao/9662-censo-demografico-2010.html?edicao=10503&t=resultados)
+    
+    
+## Etapas:
+
+- [EDA-6803.qmd](EDA-6803.qmd)
+
+- [EDA-6805.qmd](EDA-6805.qmd)
+
+- [EDA-populacao-2022.qmd](EDA-populacao-2022.qmd)
+
+- [unindo-os-dados.qmd](unindo-os-dados.qmd)

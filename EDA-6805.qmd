@@ -5,7 +5,6 @@ format: html
 editor: visual
 ---
 
-
 ## Dependências
 
 Carregando pacotes necessários:
@@ -18,16 +17,13 @@ library(readxl)
 library(janitor)
 ```
 
-
 Carregando os municípios de interesse:
 
 ```{r}
-source("municipios_interesse.R")
+source("R/municipios_interesse.R")
 ```
 
-
 ## Leitura e limpeza dos dados
-
 
 ```{r}
 tab_6805 <-
@@ -75,7 +71,6 @@ tab_6805 |>
   distinct(name) |> 
   pull()
 ```
-
 
 ```{r}
 # filtrando os municipios que são focos da analise
@@ -132,6 +127,6 @@ head(tab_6805_amauri) |>
   knitr::kable()
 
 tab_6805_amauri |>
-  writexl::write_xlsx("tabela_amauri_6805.xlsx")
+  writexl::write_xlsx("output/tabela_amauri_6805.xlsx")
 
 ```
