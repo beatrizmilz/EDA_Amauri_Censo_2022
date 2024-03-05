@@ -7,32 +7,39 @@
     "text": "tab_pop_comparacao &lt;-\n  readxl::read_xlsx(\"output/tabela_amauri_pop_comparacao.xlsx\")\n\ntab_abastecimento &lt;-\n  readxl::read_xlsx(\"output/tabela_amauri_6803.xlsx\")\n\ntab_esgoto &lt;- readxl::read_xlsx(\"output/tabela_amauri_6805.xlsx\")\n\n\ntabela_amauri_final &lt;- tab_pop_comparacao |&gt;\n  dplyr::left_join(tab_abastecimento, by = c(\"name_muni\" = \"nome_muni\")) |&gt;\n  dplyr::left_join(tab_esgoto,\n                   by = c(\"name_muni\" = \"nome_muni\", \"uf\",\n                          \"categoria_tabela\", \"total\")) |&gt;\n  dplyr::rename(total_domicilios = total,\n                pop_porc_crescimento = porc_crescimento) |&gt;\n  dplyr::mutate(estimativa_pessoas_por_domicilio = populacao_estimada_2022 / total_domicilios ,\n                .after = total_domicilios) |&gt;\n  dplyr::select(-uf) |&gt;\n  dplyr::relocate(categoria_tabela, .after = name_muni)\n\n\nhead(tabela_amauri_final) |&gt; \n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nname_muni\ncategoria_tabela\npopulacao_2010\npopulacao_estimada_2022\npop_porc_crescimento\ntotal_domicilios\nestimativa_pessoas_por_domicilio\nvalor_possui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\nvalor_possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\nvalor_nao_possui_ligacao_com_a_rede_geral\nporc_possui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\nporc_possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\nporc_nao_possui_ligacao_com_a_rede_geral\nsoma_cat_01_rede_geral_ou_pluvial\nsoma_cat_02_fossa_septica_ou_fossa_filtro_ligada_a_rede\nsoma_cat_03_fossa_septica_ou_fossa_filtro_nao_ligada_a_rede\nsoma_cat_04_outros\nporc_cat_01_rede_geral_ou_pluvial\nporc_cat_02_fossa_septica_ou_fossa_filtro_ligada_a_rede\nporc_cat_03_fossa_septica_ou_fossa_filtro_nao_ligada_a_rede\nporc_cat_04_outros\n\n\n\n\nBarueri\nPrioritários para Tarcísio\n240749\n342613\n42.31\n109460\n3.130029\n109071\n191\n198\n99.64\n0.17\n0.18\n105791\n1089\n1404\n1176\n96.65\n0.99\n1.28\n1.07\n\n\nBotucatu\nSedes regionais da Sabesp\n127328\n145272\n14.09\n54424\n2.669264\n52907\n301\n1216\n97.21\n0.55\n2.23\n51799\n287\n1416\n922\n95.18\n0.53\n2.60\n1.69\n\n\nCaraguatatuba\nSedes regionais da Sabesp\n100840\n132558\n31.45\n48632\n2.725736\n46417\n578\n1637\n95.45\n1.19\n3.37\n39760\n1269\n4736\n2867\n81.76\n2.61\n9.74\n5.90\n\n\nCarapicuíba\nIntermediários\n369584\n406221\n9.91\n136793\n2.969604\n135698\n442\n653\n99.20\n0.32\n0.48\n118317\n2540\n4275\n11661\n86.49\n1.86\n3.13\n8.52\n\n\nCotia\nIntermediários\n201150\n289622\n43.98\n95935\n3.018940\n89693\n1373\n4869\n93.49\n1.43\n5.08\n58728\n3230\n19885\n14092\n61.22\n3.37\n20.73\n14.69\n\n\nDiadema\nPrioritários para Tarcísio\n386089\n404738\n4.83\n144824\n2.794689\n144586\n103\n135\n99.84\n0.07\n0.09\n141165\n1944\n931\n784\n97.47\n1.34\n0.64\n0.54\n\n\n\n\nwritexl::write_xlsx(tabela_amauri_final, \"output/tabela_amauri_joined.xlsx\")"
   },
   {
-    "objectID": "EDA-6803.html",
-    "href": "EDA-6803.html",
-    "title": "Explorando a tabela 6803",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Abastecimento público e esgotamento sanitário no estado de São Paulo - Censo 2022",
     "section": "",
-    "text": "Carregando pacotes necessários:\n\nlibrary(tidyverse)\nlibrary(readxl)\nlibrary(janitor)\n\nCarregando os municípios de interesse:\n\nsource(\"R/municipios_interesse.R\")"
+    "text": "Conforme o Censo 2022, identificar para um conjunto de municípios:\n\nQuantos habitantes não têm abastecimento de água adequado\nQuantos não têm esgotamento sanitário adequado"
   },
   {
-    "objectID": "EDA-6803.html#dependências",
-    "href": "EDA-6803.html#dependências",
-    "title": "Explorando a tabela 6803",
+    "objectID": "index.html#objetivo",
+    "href": "index.html#objetivo",
+    "title": "Abastecimento público e esgotamento sanitário no estado de São Paulo - Censo 2022",
     "section": "",
-    "text": "Carregando pacotes necessários:\n\nlibrary(tidyverse)\nlibrary(readxl)\nlibrary(janitor)\n\nCarregando os municípios de interesse:\n\nsource(\"R/municipios_interesse.R\")"
+    "text": "Conforme o Censo 2022, identificar para um conjunto de municípios:\n\nQuantos habitantes não têm abastecimento de água adequado\nQuantos não têm esgotamento sanitário adequado"
   },
   {
-    "objectID": "EDA-6803.html#leitura-e-limpeza-dos-dados",
-    "href": "EDA-6803.html#leitura-e-limpeza-dos-dados",
-    "title": "Explorando a tabela 6803",
-    "section": "Leitura e limpeza dos dados",
-    "text": "Leitura e limpeza dos dados\n\ntab_6803 &lt;- read_xlsx(\"dados/tabela6803_MUN_SP.xlsx\",\n                      skip = 4) |&gt;\n  janitor::clean_names() |&gt;\n  rename(nome_muni = x1) |&gt;\n    filter(nome_muni != \"Fonte: IBGE - Censo Demográfico\",\n         nome_muni != \"São Paulo\") |&gt; \n  separate(nome_muni, c(\"nome_muni\", \"uf\"), sep = \"\\\\(\") |&gt; \n  mutate(uf = str_remove(uf, \"\\\\)\"),\n         nome_muni = stringr::str_trim(nome_muni)) |&gt;\n  mutate(across(\n    -c(\n      nome_muni, uf,\n      total,\n      possui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\n    ),\n    readr::parse_number\n  )) \n\n\nhead(tab_6803) |&gt; \n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnome_muni\nuf\ntotal\npossui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_poco_profundo_ou_artesiano\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_poco_raso_freatico_ou_cacimba\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_fonte_nascente_ou_mina\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_carro_pipa\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_agua_da_chuva_armazenada\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_rios_acudes_corregos_lagos_e_igarapes\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_outra\nnao_possui_ligacao_com_a_rede_geral\nnao_possui_ligacao_com_a_rede_geral_poco_profundo_ou_artesiano\nnao_possui_ligacao_com_a_rede_geral_poco_raso_freatico_ou_cacimba\nnao_possui_ligacao_com_a_rede_geral_fonte_nascente_ou_mina\nnao_possui_ligacao_com_a_rede_geral_carro_pipa\nnao_possui_ligacao_com_a_rede_geral_agua_da_chuva_armazenada\nnao_possui_ligacao_com_a_rede_geral_rios_acudes_corregos_lagos_e_igarapes\nnao_possui_ligacao_com_a_rede_geral_outra\n\n\n\n\nAdamantina\nSP\n13583\n13178\n16\n14\n1\nNA\nNA\nNA\nNA\n1\n389\n337\n44\n6\n2\nNA\nNA\nNA\n\n\nAdolfo\nSP\n1650\n1459\n74\n59\n15\nNA\nNA\nNA\nNA\nNA\n117\n113\n4\nNA\nNA\nNA\nNA\nNA\n\n\nAguaí\nSP\n11480\n10718\n86\n64\n7\n10\n2\nNA\nNA\n3\n676\n380\n218\n69\n7\nNA\nNA\n2\n\n\nÁguas da Prata\nSP\n2830\n2543\n29\n16\n1\n12\nNA\nNA\nNA\nNA\n258\n34\n14\n208\n1\nNA\n1\nNA\n\n\nÁguas de Lindóia\nSP\n6799\n6398\n139\n46\n13\n80\nNA\nNA\nNA\nNA\n262\n69\n22\n167\n1\nNA\n1\n2\n\n\nÁguas de Santa Bárbara\nSP\n2710\n2368\n17\n11\nNA\n3\nNA\nNA\n1\n2\n325\n246\n7\n52\n11\nNA\n2\n7\n\n\n\n\n\n\ntab_6803_longa &lt;- tab_6803 |&gt; \n  pivot_longer(cols = -c(nome_muni, total, uf),\n               names_to = \"variavel\",\n               values_to = \"valor\") \n\nhead(tab_6803_longa) |&gt; \n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\nnome_muni\nuf\ntotal\nvariavel\nvalor\n\n\n\n\nAdamantina\nSP\n13583\npossui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\n13178\n\n\nAdamantina\nSP\n13583\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\n16\n\n\nAdamantina\nSP\n13583\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_poco_profundo_ou_artesiano\n14\n\n\nAdamantina\nSP\n13583\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_poco_raso_freatico_ou_cacimba\n1\n\n\nAdamantina\nSP\n13583\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_fonte_nascente_ou_mina\nNA\n\n\nAdamantina\nSP\n13583\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_carro_pipa\nNA"
+    "objectID": "index.html#municípios-de-interesse",
+    "href": "index.html#municípios-de-interesse",
+    "title": "Abastecimento público e esgotamento sanitário no estado de São Paulo - Censo 2022",
+    "section": "Municípios de interesse:",
+    "text": "Municípios de interesse:"
   },
   {
-    "objectID": "EDA-6803.html#respondendo-a-pergunta",
-    "href": "EDA-6803.html#respondendo-a-pergunta",
-    "title": "Explorando a tabela 6803",
-    "section": "Respondendo a pergunta",
-    "text": "Respondendo a pergunta\n\ntab_amauri_6803 &lt;- \n  tab_6803_longa |&gt;\n  # Filtrando os municípios que são foco da análise:\n    mutate(\n    categoria_tabela = case_when(\n      nome_muni %in% muni_prioritarios_para_tarcisio ~ \"Prioritários para Tarcísio\",\n      nome_muni %in% muni_intermediarios ~ \"Intermediários\",\n      nome_muni %in% muni_sedes_regionais_sabesp ~ \"Sedes regionais da Sabesp\"\n    ), .after = nome_muni\n  ) |&gt; \n  drop_na(categoria_tabela) |&gt; \n  filter(\n    variavel %in% c(\n      \"possui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\",\n      \"possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\",\n      \"nao_possui_ligacao_com_a_rede_geral\"\n    )) |&gt; \n  mutate(porc = round((valor / total)*100,2)) |&gt; \n  pivot_wider(names_from = variavel, values_from = c(valor, porc)) \n\n\nhead(tab_amauri_6803) |&gt; \n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnome_muni\ncategoria_tabela\nuf\ntotal\nvalor_possui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\nvalor_possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\nvalor_nao_possui_ligacao_com_a_rede_geral\nporc_possui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\nporc_possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\nporc_nao_possui_ligacao_com_a_rede_geral\n\n\n\n\nBarueri\nPrioritários para Tarcísio\nSP\n109460\n109071\n191\n198\n99.64\n0.17\n0.18\n\n\nBotucatu\nSedes regionais da Sabesp\nSP\n54424\n52907\n301\n1216\n97.21\n0.55\n2.23\n\n\nCaraguatatuba\nSedes regionais da Sabesp\nSP\n48632\n46417\n578\n1637\n95.45\n1.19\n3.37\n\n\nCarapicuíba\nIntermediários\nSP\n136793\n135698\n442\n653\n99.20\n0.32\n0.48\n\n\nCotia\nIntermediários\nSP\n95935\n89693\n1373\n4869\n93.49\n1.43\n5.08\n\n\nDiadema\nPrioritários para Tarcísio\nSP\n144824\n144586\n103\n135\n99.84\n0.07\n0.09\n\n\n\n\ntab_amauri_6803 |&gt; \n  writexl::write_xlsx(\"output/tabela_amauri_6803.xlsx\")"
+    "objectID": "index.html#dados",
+    "href": "index.html#dados",
+    "title": "Abastecimento público e esgotamento sanitário no estado de São Paulo - Censo 2022",
+    "section": "Dados",
+    "text": "Dados\n\nTabelas:\n\ntabela6803_MUN_SP.xlsx - Domicílios particulares permanentes ocupados, por existência de ligação à rede geral de distribuição de água e principal forma de abastecimento de água. Download dos dados feito em 04/03/2024, no site do IBGE: Estatísticas &gt; Sociais &gt; População &gt; Censo Demográfico.\ntabela6805_MUN_SP.xlsx - Domicílios particulares permanentes ocupados, por tipo de esgotamento sanitário. Download dos dados feito em 04/03/2024, no site do IBGE: Estatísticas &gt; Sociais &gt; População &gt; Censo Demográfico.\nPOP2022_Municipios_20230622.xls Prévia da População dos Municípios com base nos dados do Censo Demográfico 2022 coletados até 25/12/2022. Download dos dados feito em 04/03/2024, no site do IBGE.\nTabela 4.20.1.1.xls - Tabelas - Características da População e dos Domicílios - Mesorregiões, microrregiões, municípios,distritos, subdistritos e bairros. Download dos dados feito em 04/03/2024, no site do IBGE."
+  },
+  {
+    "objectID": "index.html#etapas",
+    "href": "index.html#etapas",
+    "title": "Abastecimento público e esgotamento sanitário no estado de São Paulo - Censo 2022",
+    "section": "Etapas:",
+    "text": "Etapas:\n\nEDA-6803.qmd\nEDA-6805.qmd\nEDA-populacao-2022.qmd\nunindo-os-dados.qmd"
   },
   {
     "objectID": "EDA-6805.html",
@@ -70,74 +77,25 @@
     "text": "Respondendo a pergunta\n\ntab_6805_amauri &lt;- tab_6805_categorizacao |&gt;\n  group_by(nome_muni, categoria_tabela, uf, total, categoria_esgoto) |&gt;\n  summarise(soma = sum(value, na.rm = TRUE),\n            porc = round((soma / total) * 100, 2)) |&gt;\n  dplyr::distinct() |&gt;\n  pivot_wider(names_from = categoria_esgoto,\n              values_from = c(soma, porc))\n\nhead(tab_6805_amauri) |&gt; \n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnome_muni\ncategoria_tabela\nuf\ntotal\nsoma_cat_01_rede_geral_ou_pluvial\nsoma_cat_02_fossa_septica_ou_fossa_filtro_ligada_a_rede\nsoma_cat_03_fossa_septica_ou_fossa_filtro_nao_ligada_a_rede\nsoma_cat_04_outros\nporc_cat_01_rede_geral_ou_pluvial\nporc_cat_02_fossa_septica_ou_fossa_filtro_ligada_a_rede\nporc_cat_03_fossa_septica_ou_fossa_filtro_nao_ligada_a_rede\nporc_cat_04_outros\n\n\n\n\nBarueri\nPrioritários para Tarcísio\nSP\n109460\n105791\n1089\n1404\n1176\n96.65\n0.99\n1.28\n1.07\n\n\nBotucatu\nSedes regionais da Sabesp\nSP\n54424\n51799\n287\n1416\n922\n95.18\n0.53\n2.60\n1.69\n\n\nCaraguatatuba\nSedes regionais da Sabesp\nSP\n48632\n39760\n1269\n4736\n2867\n81.76\n2.61\n9.74\n5.90\n\n\nCarapicuíba\nIntermediários\nSP\n136793\n118317\n2540\n4275\n11661\n86.49\n1.86\n3.13\n8.52\n\n\nCotia\nIntermediários\nSP\n95935\n58728\n3230\n19885\n14092\n61.22\n3.37\n20.73\n14.69\n\n\nDiadema\nPrioritários para Tarcísio\nSP\n144824\n141165\n1944\n931\n784\n97.47\n1.34\n0.64\n0.54\n\n\n\n\ntab_6805_amauri |&gt;\n  writexl::write_xlsx(\"output/tabela_amauri_6805.xlsx\")"
   },
   {
-    "objectID": "EDA-populacao-2022.html",
-    "href": "EDA-populacao-2022.html",
-    "title": "População por municípios",
+    "objectID": "EDA-6803.html",
+    "href": "EDA-6803.html",
+    "title": "Explorando a tabela 6803",
     "section": "",
-    "text": "Download dos dados em:"
+    "text": "Carregando pacotes necessários:\n\nlibrary(tidyverse)\nlibrary(readxl)\nlibrary(janitor)\n\nCarregando os municípios de interesse:\n\nsource(\"R/municipios_interesse.R\")"
   },
   {
-    "objectID": "EDA-populacao-2022.html#dependências",
-    "href": "EDA-populacao-2022.html#dependências",
-    "title": "População por municípios",
-    "section": "Dependências",
-    "text": "Dependências\nCarregando pacotes necessários:\n\nlibrary(tidyverse)\nlibrary(readxl)\nlibrary(janitor)\n\nCarregando os municípios de interesse:\n\nsource(\"R/municipios_interesse.R\")"
+    "objectID": "EDA-6803.html#dependências",
+    "href": "EDA-6803.html#dependências",
+    "title": "Explorando a tabela 6803",
+    "section": "",
+    "text": "Carregando pacotes necessários:\n\nlibrary(tidyverse)\nlibrary(readxl)\nlibrary(janitor)\n\nCarregando os municípios de interesse:\n\nsource(\"R/municipios_interesse.R\")"
   },
   {
-    "objectID": "EDA-populacao-2022.html#leitura-e-limpeza-dos-dados",
-    "href": "EDA-populacao-2022.html#leitura-e-limpeza-dos-dados",
-    "title": "População por municípios",
+    "objectID": "EDA-6803.html#leitura-e-limpeza-dos-dados",
+    "href": "EDA-6803.html#leitura-e-limpeza-dos-dados",
+    "title": "Explorando a tabela 6803",
     "section": "Leitura e limpeza dos dados",
-    "text": "Leitura e limpeza dos dados\n\ndados &lt;-\n  read_xls(\"dados/POP2022_Municipios_20230622.xls\", skip = 1) |&gt;\n  filter(UF == \"SP\") |&gt;\n  janitor::clean_names() |&gt;\n  filter(\n    nome_do_municipio %in% c(\n      muni_prioritarios_para_tarcisio,\n      muni_intermediarios,\n      muni_sedes_regionais_sabesp\n    )\n  ) |&gt;\n rename(name_muni = nome_do_municipio, populacao_estimada_2022 = populacao) |&gt;\n  mutate(populacao_estimada_2022 = readr::parse_number(populacao_estimada_2022)) \n\ndados |&gt; \n writexl::write_xlsx(\"output/tabela_amauri_pop_2022.xlsx\")\n\n\ndados_2010_abj &lt;- abjData::pnud_muni |&gt; \n  mutate(cod_munic = str_sub(codmun7, 3, 7)) |&gt; \n  filter(cod_munic %in% dados$cod_munic, ano == 2010) |&gt; \n  dplyr::select(cod_munic, municipio, uf, populacao_2010_abj = pop) |&gt; \n  munifacil::limpar_colunas(col_muni = municipio, col_uf = uf)"
-  },
-  {
-    "objectID": "EDA-populacao-2022.html#dados-censo-2010",
-    "href": "EDA-populacao-2022.html#dados-censo-2010",
-    "title": "População por municípios",
-    "section": "Dados Censo 2010",
-    "text": "Dados Censo 2010\n\ndados_2010_censo &lt;- read_xls(\"dados/censo_2010-Tabela 4.20.1.1.xls\", skip = 4) |&gt; \n  janitor::clean_names() |&gt; \n  drop_na(x1) |&gt;\n  select(name_muni = x1, populacao_2010 = total) |&gt; \n  tibble::rowid_to_column() |&gt; \n  mutate(inicio_muni = stringr::str_starts(name_muni, \"Municípios e Distritos|Municípios e Bairros\"),\n        marcador = cumsum(inicio_muni)) |&gt; \n  filter(marcador == 1) |&gt; \n  select(name_muni, populacao_2010) |&gt; \n  distinct() |&gt; \n  group_by(name_muni) |&gt; \n  summarise(populacao_2010 = max(populacao_2010))"
-  },
-  {
-    "objectID": "EDA-populacao-2022.html#comparação-entre-2010-e-2022",
-    "href": "EDA-populacao-2022.html#comparação-entre-2010-e-2022",
-    "title": "População por municípios",
-    "section": "Comparação entre 2010 e 2022",
-    "text": "Comparação entre 2010 e 2022\n\ndados_comparacao &lt;- dados |&gt; \n  munifacil::limpar_colunas(col_muni = name_muni, col_uf = uf) |&gt;\n  left_join(dados_2010_abj, by = \"muni_join\") |&gt;\n  left_join(dados_2010_censo) |&gt; \n  select(name_muni, populacao_2010_abj, populacao_2010, populacao_estimada_2022) |&gt; \n  mutate(diferenca_abj_censo = populacao_2010_abj - populacao_2010) |&gt; \n  mutate(\n    porc_crescimento = round(((populacao_estimada_2022 - populacao_2010) / populacao_2010) * 100,2)\n  ) |&gt; \n  select(name_muni, populacao_2010, populacao_estimada_2022, porc_crescimento) \n\ndados_comparacao |&gt; \n writexl::write_xlsx(\"output/tabela_amauri_pop_comparacao.xlsx\")"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Abastecimento público e esgotamento sanitário no estado de São Paulo - Censo 2022",
-    "section": "",
-    "text": "Conforme o Censo 2022, identificar para um conjunto de municípios:\n\nQuantos habitantes não têm abastecimento de água adequado\nQuantos não têm esgotamento sanitário adequado"
-  },
-  {
-    "objectID": "index.html#objetivo",
-    "href": "index.html#objetivo",
-    "title": "Abastecimento público e esgotamento sanitário no estado de São Paulo - Censo 2022",
-    "section": "",
-    "text": "Conforme o Censo 2022, identificar para um conjunto de municípios:\n\nQuantos habitantes não têm abastecimento de água adequado\nQuantos não têm esgotamento sanitário adequado"
-  },
-  {
-    "objectID": "index.html#municípios-de-interesse",
-    "href": "index.html#municípios-de-interesse",
-    "title": "Abastecimento público e esgotamento sanitário no estado de São Paulo - Censo 2022",
-    "section": "Municípios de interesse:",
-    "text": "Municípios de interesse:"
-  },
-  {
-    "objectID": "index.html#dados",
-    "href": "index.html#dados",
-    "title": "Abastecimento público e esgotamento sanitário no estado de São Paulo - Censo 2022",
-    "section": "Dados",
-    "text": "Dados\n\nTabelas:\n\ntabela6803_MUN_SP.xlsx - Domicílios particulares permanentes ocupados, por existência de ligação à rede geral de distribuição de água e principal forma de abastecimento de água. Download dos dados feito em 04/03/2024, no site do IBGE: Estatísticas &gt; Sociais &gt; População &gt; Censo Demográfico.\ntabela6805_MUN_SP.xlsx - Domicílios particulares permanentes ocupados, por tipo de esgotamento sanitário. Download dos dados feito em 04/03/2024, no site do IBGE: Estatísticas &gt; Sociais &gt; População &gt; Censo Demográfico.\nPOP2022_Municipios_20230622.xls Prévia da População dos Municípios com base nos dados do Censo Demográfico 2022 coletados até 25/12/2022. Download dos dados feito em 04/03/2024, no site do IBGE.\nTabela 4.20.1.1.xls - Tabelas - Características da População e dos Domicílios - Mesorregiões, microrregiões, municípios,distritos, subdistritos e bairros. Download dos dados feito em 04/03/2024, no site do IBGE."
-  },
-  {
-    "objectID": "index.html#etapas",
-    "href": "index.html#etapas",
-    "title": "Abastecimento público e esgotamento sanitário no estado de São Paulo - Censo 2022",
-    "section": "Etapas:",
-    "text": "Etapas:\n\nEDA-6803.qmd\nEDA-6805.qmd\nEDA-populacao-2022.qmd\nunindo-os-dados.qmd"
+    "text": "Leitura e limpeza dos dados\n\ntab_6803 &lt;- read_xlsx(\"dados/tabela6803_MUN_SP.xlsx\",\n                      skip = 4) |&gt;\n  janitor::clean_names() |&gt;\n  rename(nome_muni = x1) |&gt;\n    filter(nome_muni != \"Fonte: IBGE - Censo Demográfico\",\n         nome_muni != \"São Paulo\") |&gt; \n  separate(nome_muni, c(\"nome_muni\", \"uf\"), sep = \"\\\\(\") |&gt; \n  mutate(uf = str_remove(uf, \"\\\\)\"),\n         nome_muni = stringr::str_trim(nome_muni)) |&gt;\n  mutate(across(\n    -c(\n      nome_muni, uf,\n      total,\n      possui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\n    ),\n    readr::parse_number\n  )) \n\n\nhead(tab_6803) |&gt; \n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnome_muni\nuf\ntotal\npossui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_poco_profundo_ou_artesiano\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_poco_raso_freatico_ou_cacimba\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_fonte_nascente_ou_mina\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_carro_pipa\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_agua_da_chuva_armazenada\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_rios_acudes_corregos_lagos_e_igarapes\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_outra\nnao_possui_ligacao_com_a_rede_geral\nnao_possui_ligacao_com_a_rede_geral_poco_profundo_ou_artesiano\nnao_possui_ligacao_com_a_rede_geral_poco_raso_freatico_ou_cacimba\nnao_possui_ligacao_com_a_rede_geral_fonte_nascente_ou_mina\nnao_possui_ligacao_com_a_rede_geral_carro_pipa\nnao_possui_ligacao_com_a_rede_geral_agua_da_chuva_armazenada\nnao_possui_ligacao_com_a_rede_geral_rios_acudes_corregos_lagos_e_igarapes\nnao_possui_ligacao_com_a_rede_geral_outra\n\n\n\n\nAdamantina\nSP\n13583\n13178\n16\n14\n1\nNA\nNA\nNA\nNA\n1\n389\n337\n44\n6\n2\nNA\nNA\nNA\n\n\nAdolfo\nSP\n1650\n1459\n74\n59\n15\nNA\nNA\nNA\nNA\nNA\n117\n113\n4\nNA\nNA\nNA\nNA\nNA\n\n\nAguaí\nSP\n11480\n10718\n86\n64\n7\n10\n2\nNA\nNA\n3\n676\n380\n218\n69\n7\nNA\nNA\n2\n\n\nÁguas da Prata\nSP\n2830\n2543\n29\n16\n1\n12\nNA\nNA\nNA\nNA\n258\n34\n14\n208\n1\nNA\n1\nNA\n\n\nÁguas de Lindóia\nSP\n6799\n6398\n139\n46\n13\n80\nNA\nNA\nNA\nNA\n262\n69\n22\n167\n1\nNA\n1\n2\n\n\nÁguas de Santa Bárbara\nSP\n2710\n2368\n17\n11\nNA\n3\nNA\nNA\n1\n2\n325\n246\n7\n52\n11\nNA\n2\n7\n\n\n\n\n\n\ntab_6803_longa &lt;- tab_6803 |&gt; \n  pivot_longer(cols = -c(nome_muni, total, uf),\n               names_to = \"variavel\",\n               values_to = \"valor\") \n\nhead(tab_6803_longa) |&gt; \n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\nnome_muni\nuf\ntotal\nvariavel\nvalor\n\n\n\n\nAdamantina\nSP\n13583\npossui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\n13178\n\n\nAdamantina\nSP\n13583\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\n16\n\n\nAdamantina\nSP\n13583\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_poco_profundo_ou_artesiano\n14\n\n\nAdamantina\nSP\n13583\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_poco_raso_freatico_ou_cacimba\n1\n\n\nAdamantina\nSP\n13583\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_fonte_nascente_ou_mina\nNA\n\n\nAdamantina\nSP\n13583\npossui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma_carro_pipa\nNA"
   },
   {
     "objectID": "EDA-6803.html#explorando-os-dados",
@@ -145,6 +103,13 @@
     "title": "Explorando a tabela 6803",
     "section": "Explorando os dados",
     "text": "Explorando os dados\nExplorando os dados. As categorias são mutuamente exclusivas? Não! Ter cuidado. Precisamos tirar as categorias “nao_possui_ligacao_com_a_rede_geral” e “possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma” para não contar 2x.\n\ntab_6803_longa |&gt; \n  filter(!variavel %in% c(\"nao_possui_ligacao_com_a_rede_geral\",\n  \"possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\")) |&gt; \n  group_by(nome_muni, total) |&gt;\n  summarise(soma = sum(valor, na.rm = TRUE)) |&gt; \n  mutate(verificacao = total == soma) |&gt; \n  glimpse()\n\nRows: 645\nColumns: 4\nGroups: nome_muni [645]\n$ nome_muni   &lt;chr&gt; \"Adamantina\", \"Adolfo\", \"Aguaí\", \"Agudos\", \"Alambari\", \"Al…\n$ total       &lt;dbl&gt; 13583, 1650, 11480, 12936, 2139, 1726, 1278, 6078, 1518, 5…\n$ soma        &lt;dbl&gt; 13583, 1650, 11480, 12936, 2139, 1726, 1278, 6078, 1518, 5…\n$ verificacao &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE…"
+  },
+  {
+    "objectID": "EDA-6803.html#respondendo-a-pergunta",
+    "href": "EDA-6803.html#respondendo-a-pergunta",
+    "title": "Explorando a tabela 6803",
+    "section": "Respondendo a pergunta",
+    "text": "Respondendo a pergunta\n\ntab_amauri_6803 &lt;- \n  tab_6803_longa |&gt;\n  # Filtrando os municípios que são foco da análise:\n    mutate(\n    categoria_tabela = case_when(\n      nome_muni %in% muni_prioritarios_para_tarcisio ~ \"Prioritários para Tarcísio\",\n      nome_muni %in% muni_intermediarios ~ \"Intermediários\",\n      nome_muni %in% muni_sedes_regionais_sabesp ~ \"Sedes regionais da Sabesp\"\n    ), .after = nome_muni\n  ) |&gt; \n  drop_na(categoria_tabela) |&gt; \n  filter(\n    variavel %in% c(\n      \"possui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\",\n      \"possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\",\n      \"nao_possui_ligacao_com_a_rede_geral\"\n    )) |&gt; \n  mutate(porc = round((valor / total)*100,2)) |&gt; \n  pivot_wider(names_from = variavel, values_from = c(valor, porc)) \n\n\nhead(tab_amauri_6803) |&gt; \n  knitr::kable()\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nnome_muni\ncategoria_tabela\nuf\ntotal\nvalor_possui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\nvalor_possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\nvalor_nao_possui_ligacao_com_a_rede_geral\nporc_possui_ligacao_a_rede_geral_e_a_utiliza_como_forma_principal\nporc_possui_ligacao_a_rede_geral_mas_utiliza_principalmente_outra_forma\nporc_nao_possui_ligacao_com_a_rede_geral\n\n\n\n\nBarueri\nPrioritários para Tarcísio\nSP\n109460\n109071\n191\n198\n99.64\n0.17\n0.18\n\n\nBotucatu\nSedes regionais da Sabesp\nSP\n54424\n52907\n301\n1216\n97.21\n0.55\n2.23\n\n\nCaraguatatuba\nSedes regionais da Sabesp\nSP\n48632\n46417\n578\n1637\n95.45\n1.19\n3.37\n\n\nCarapicuíba\nIntermediários\nSP\n136793\n135698\n442\n653\n99.20\n0.32\n0.48\n\n\nCotia\nIntermediários\nSP\n95935\n89693\n1373\n4869\n93.49\n1.43\n5.08\n\n\nDiadema\nPrioritários para Tarcísio\nSP\n144824\n144586\n103\n135\n99.84\n0.07\n0.09\n\n\n\n\ntab_amauri_6803 |&gt; \n  writexl::write_xlsx(\"output/tabela_amauri_6803.xlsx\")"
   },
   {
     "objectID": "EDA-populacao.html",

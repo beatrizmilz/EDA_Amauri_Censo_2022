@@ -8,7 +8,7 @@ author:
   - "Beatriz Milz"
 
 website:
-  title: "."
+  title: "Censo 2022 - Amauri"
   navbar:
     left:
       - href: index.qmd
